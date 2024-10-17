@@ -1,0 +1,92 @@
+---
+subtitle: "Plan d'analyse statistique"
+lof: false
+lot: false
+---
+
+```{r info}
+rm(list=ls())
+library("baseph")
+library("tidyverse")
+# sessionInfo()
+```
+
+# Généralités
+
+Le \gls{alpha} retenu sera de \num{0.05} & la \gls{puissance} de \num{0.8}.
+
+Vu le faible nombre de cas on ne fera pas d'hypothèse de normalité. Les variables numériques seront présentées par leur médiane avec les quartiles & comparées grâce au test non paramétrique de Wilcoxon. Les variables discrètes seront présentés en nombre avec le pourcentage. L'intervalle de confiance (à 95 %) sera calculé par \gls{bootstrap} (package `boot` [@boot]). Le test du $\chi^2$ de Spearman sera utilisé sous réserve d'effectifs suffisants, à défaut le test exact de Fischer. Des graphiques seront réalisés pour les résultats importants (package `ggplot2` [@ggplot]).
+
+## Taille de l'échantillon
+
+Il s'agit d'une étude observationnelle simple pour lesquelles il est difficile de préciser un nombre de cas nécessaires en l'absence de test statistique. Néanmoins on peut estimer à environ cent cas le strict minimum nécessaire pour avoir un échantillon utilisable s'il n'y a pas trop de données manquantes. 
+
+## Données manquantes
+
+Le décompte des données manquantes sera réalisé & présenté par un tableau ou un graphique. Les variables comportant trop de données manquantes ou non utilisables ne seront pas prises en compte après validation par le promoteur.
+
+Après ce premier tri une imputation des données manquantes (package `missMDA` [@missmda]) sera réalisée uniquement pour l'analyse factorielle & pour la recherche du meilleur modèle par méthode de \gls{lasso} pour les analyses par régression (logistique ou linéaire). Néanmoins pour cette analyse, après choix du modèle, le calcul final sera fait avec les données réelles. 
+
+## Qualité des données
+
+Une analyse de corrélation (package `corr` [@corr]) entre les variables sera réalisée & présentée sur un graphique de corrélation. Si certaines variables se montrent anormalement corrélées elles devront être exclues de l'étude après accord du promoteur.
+
+Les variables monotones (toutes les valeurs identiques) ne seront pas analysées mais seront signalées.
+
+Les variables en texte libre ne seront pas analysées.
+
+# Description de la population
+
+## Analyse simple
+
+Un tableau présentera les données démographiques des patients (âge,sexe, type d'accident\dots). 
+
+
+## Analyse factorielle
+
+Si le nombre de cas recueillis le permet une analyse factorielle en MCA (Analyse de correspondances multiples -- package `FactoMineR` [@facto]) sera réalisée.
+
+Cette analyse ne pourra être réalisée qu'après transformation des variables numériques en catégories & imputation des données manquantes ce qui n'est possible que si ces dernières ne sont pas trop nombreuses.
+
+# Objectif principal
+*Présence, lors de la prise en charge pré-hospitalière d’un critère de transfusion sanguine massive et immédiate mesurée par le score ABC entre l’arrivée du \gls{smur} et \qty{10}{\min} avant l’arrivée à l’hôpital.*
+
+
+Le score ABC sera calculé pour tous les patients. Le nombre avec le pourcentage (avec son intervalle de confiance à 95 %) de patients ayant un score ABC $\geq$ 2 sera présenté pour tous les stades (temps) de la prise en charge.
+
+# Objectifs secondaires
+
+## Objectif 1
+*La présence d’au moins une transfusion, quel que soit le volume entre le bilan et l’arrivée à l’hôpital*
+
+Le nombre avec le pourcentage (avec son intervalle de confiance à 95 %) de patients ayant reçu une transfusion sera présenté, croisé avec le stade de la prise en charge (temps) & le score ABC.
+
+## Objectif 2
+*La mortalité est définie par les patients vivant à l’arrivée du \gls{smur} et décédés à l’arrivée à l’hôpital.*
+
+
+
+## Objectif 3
+*Le temps de prise en charge est déterminé par le délai entre l’arrivée de l’équipe médicale et l’arrivée à l’hôpital.*
+
+## Objectif 4
+*Nombre de patients potentiellement éligibles à la pose d’un \gls{reboa}  au regard de la présence de saignement abdominal ou pelvien à l’échographie, d’une \gls{pas} > \qty{90}{\mmhg} malgré \qty{3}{\mg\per\hour} de \gls{nad}, l’absence de trauma thoracique ou des \gls{tsa}*
+
+
+# Technique {.appendix}
+
+L'analyse statistique sera réalisée avec le logiciel **R**[@rstat] & divers packages. Outre ceux cités dans le texte ou utilisera en particulier `tidyverse` [@tidy] & `baseph` [@baseph].
+
+Un dépôt GitHub sera utilisé qui ne comprendra que le code & non les données ou résultats. Au besoin un faux tableau de données sera présenté pour permettre des tests.
+
+<https://github.com/philippemichel/TRAP>
+
+
+
+\printglossary[ title={Abréviations \& Acronymes}, toctitle={Abréviations \& Acronymes}]
+
+
+\printglossary[type = stat, title={Glossaire statistique}, toctitle={Glossaire statistique}]
+
+\addcontentsline{toc}{chapter}{Bibliographie}
+
