@@ -1,0 +1,541 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  a4paper,
+  french]{scrreprt}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+    \definecolor{novo}{HTML}{27484b}
+    \usepackage[locale = FR, 
+                per-mode = symbol, 
+                range-phrase = { à },
+                range-units = single]{siunitx}
+    \usepackage[section]{placeins}
+    \usepackage{arsenal}
+    \usepackage{hyperref}
+    \usepackage{tcolorbox}
+    \usepackage[nonumberlist, 
+                automake,
+                style=treegroup]{glossaries-extra}
+    \usepackage{glossaries-babel}
+    \setabbreviationstyle{long-short-sc}
+    \newglossary*{stat}{Statistiques}
+    \loadglsentries{listacro}
+    \makeglossaries
+    \newcommand{\doc}{D\textsuperscript{r} }
+    \newcommand{\mme}{M\textsuperscript{me} }
+    %
+    \tcbset{colback=novo!5!white,colframe=novo!75!black}
+
+\newtcbox{\boxphm}{colback=novo!5!white, 
+                       width = 5cm,
+                       %text width=0.9\linewidth,
+                       halign = justify}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table des matières}
+\else
+  \newcommand\contentsname{Table des matières}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Liste des Figures}
+\else
+  \newcommand\listfigurename{Liste des Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Liste des Tables}
+\else
+  \newcommand\listtablename{Liste des Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{Liste des Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\usepackage{hyphenat}
+\usepackage{ifthen}
+\usepackage{calc}
+\usepackage{calculator}
+
+\usepackage{graphicx}
+\usepackage{wallpaper}
+
+\usepackage{geometry}
+
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{afterpage}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{fadings}
+\usepackage[pagecolor=none]{pagecolor}
+
+
+% Set the titlepage font families
+
+
+
+
+
+
+
+% Set the coverpage font families
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{french}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{biblatex}
+\addbibresource{stat.bib}
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={TRAP},
+  pdfauthor={Dr Philippe MICHEL},
+  pdflang={fr},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{TRAP}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Plan d'analyse statistique}
+\author{Dr Philippe MICHEL}
+\date{}
+
+\begin{document}
+%%%%% begin titlepage extension code
+
+
+\begin{titlepage}
+
+%%% TITLE PAGE START
+
+% Set up alignment commands
+%Page
+\newcommand{\titlepagepagealign}{
+\ifthenelse{\equal{left}{right}}{\raggedleft}{}
+\ifthenelse{\equal{left}{center}}{\centering}{}
+\ifthenelse{\equal{left}{left}}{\raggedright}{}
+}
+
+
+\newcommand{\titleandsubtitle}{
+% Title and subtitle
+{\textcolor{novo}{\Huge{\bfseries{\nohyphens{TRAP}}}}\par
+}%
+
+\vspace{\betweentitlesubtitle}
+{
+\textcolor{novo}{\huge{\nohyphens{Plan d'analyse statistique}}}\par
+}}
+\newcommand{\titlepagetitleblock}{
+\titleandsubtitle
+}
+
+\newcommand{\authorstyle}[1]{{\large{#1}}}
+
+\newcommand{\affiliationstyle}[1]{{\large{#1}}}
+
+\newcommand{\titlepageauthorblock}{
+{\authorstyle{\nohyphens{Dr Philippe MICHEL}{\textsuperscript{1}}}}}
+
+\newcommand{\titlepageaffiliationblock}{
+\hangindent=1em
+\hangafter=1
+{\affiliationstyle{
+{1}.~Hôpital NOVO,~Unité de Soutien à la Recherche Clinique
+
+
+\vspace{1\baselineskip} 
+}}
+}
+\newcommand{\headerstyled}{%
+{}
+}
+\newcommand{\footerstyled}{%
+{\large{\today}}
+}
+\newcommand{\datestyled}{%
+{}
+}
+
+
+\newcommand{\titlepageheaderblock}{\headerstyled}
+
+\newcommand{\titlepagefooterblock}{
+\footerstyled
+}
+
+\newcommand{\titlepagedateblock}{
+\datestyled
+}
+
+%set up blocks so user can specify order
+\newcommand{\titleblock}{\newlength{\betweentitlesubtitle}
+\setlength{\betweentitlesubtitle}{\baselineskip}
+{
+
+{\titlepagetitleblock}
+}
+
+\vspace{4\baselineskip}
+}
+
+\newcommand{\authorblock}{{\titlepageauthorblock}
+
+\vspace{2\baselineskip}
+}
+
+\newcommand{\affiliationblock}{{\titlepageaffiliationblock}
+
+\vspace{1pt}
+}
+
+\newcommand{\logoblock}{}
+
+\newcommand{\footerblock}{{\titlepagefooterblock}
+
+\vspace{1pt}
+}
+
+\newcommand{\dateblock}{}
+
+\newcommand{\headerblock}{}
+\newgeometry{top=3in,bottom=1in,right=1in,left=1in}
+% background image
+\newlength{\bgimagesize}
+\setlength{\bgimagesize}{0.5\paperwidth}
+\LENGTHDIVIDE{\bgimagesize}{\paperwidth}{\theRatio} % from calculator pkg
+\ThisULCornerWallPaper{\theRatio}{novo\_usrc.png}
+
+\thispagestyle{empty} % no page numbers on titlepages
+
+
+\newcommand{\vrulecode}{\rule{\vrulewidth}{\textheight}}
+\newlength{\vrulewidth}
+\setlength{\vrulewidth}{0.1cm}
+\newlength{\B}
+\setlength{\B}{\ifdim\vrulewidth > 0pt 0.05\textwidth\else 0pt\fi}
+\newlength{\minipagewidth}
+\ifthenelse{\equal{left}{left} \OR \equal{left}{right} }
+{% True case
+\setlength{\minipagewidth}{\textwidth - \vrulewidth - \B - 0.1\textwidth}
+}{
+\setlength{\minipagewidth}{\textwidth - 2\vrulewidth - 2\B - 0.1\textwidth}
+}
+\ifthenelse{\equal{left}{left} \OR \equal{left}{leftright}}
+{% True case
+\raggedleft % needed for the minipage to work
+\vrulecode
+\hspace{\B}
+}{%
+\raggedright % else it is right only and width is not 0
+}
+% [position of box][box height][inner position]{width}
+% [s] means stretch out vertically; assuming there is a vfill
+\begin{minipage}[b][\textheight][s]{\minipagewidth}
+\titlepagepagealign
+\titleblock
+
+\authorblock
+
+\affiliationblock
+
+\vfill
+
+\logoblock
+
+\footerblock
+\par
+
+\end{minipage}\ifthenelse{\equal{left}{right} \OR \equal{left}{leftright} }{
+\hspace{\B}
+\vrulecode}{}
+\clearpage
+\restoregeometry
+%%% TITLE PAGE END
+
+\input{generique.tex}
+\clearpage
+\end{titlepage}
+\setcounter{page}{1}
+
+%%%%% end titlepage extension code
+
+\renewcommand*\contentsname{Table des matières}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\chapter{Généralités}\label{guxe9nuxe9ralituxe9s}
+
+Le \gls{alpha} retenu sera de \num{0.05} \& la \gls{puissance} de
+\num{0.8}.
+
+Les variables numériques seront présentées par leur moyenne avec
+l'écart-type \& comparées grâce au test de Student. Les variables
+discrètes seront présentés en nombre avec le pourcentage. L'intervalle
+de confiance (à \qty{95}{\percent}) sera calculé par \gls{bootstrap}
+(package \texttt{boot} \autocite{boot}). Le test du \(\chi^2\) de
+Spearman sera utilisé sous réserve d'effectifs suffisants, à défaut le
+test exact de Fischer. Des graphiques seront réalisés pour les résultats
+importants (package \texttt{ggplot2} \autocite{ggplot}).
+
+\section{Taille de l'échantillon}\label{taille-de-luxe9chantillon}
+
+Il s'agit d'une étude observationnelle simple pour lesquelles il est
+difficile de préciser un nombre de cas nécessaires en l'absence de test
+statistique. Néanmoins on peut estimer à au moins 110 cas le strict
+minimum nécessaire pour avoir un échantillon utilisable s'il n'y a pas
+trop de données manquantes (\gls{alpha} \num{0.05}, marge d'erreur
+admissible \qty{10}{\percent}).
+
+\section{Données manquantes}\label{donnuxe9es-manquantes}
+
+Le décompte des données manquantes sera réalisé \& présenté par un
+tableau ou un graphique. Les variables comportant trop de données
+manquantes ou non utilisables ne seront pas prises en compte après
+validation par le promoteur.
+
+Après ce premier tri une imputation des données manquantes (package
+\texttt{missMDA} \autocite{missmda}) sera réalisée uniquement pour
+l'analyse factorielle \& pour la recherche du meilleur modèle par
+méthode de \gls{lasso} pour les analyses par régression (logistique ou
+linéaire). Néanmoins pour cette analyse, après choix du modèle, le
+calcul final sera fait avec les données réelles.
+
+\section{Qualité des données}\label{qualituxe9-des-donnuxe9es}
+
+Une analyse de corrélation (package \texttt{corr} \autocite{corr}) entre
+les variables sera réalisée \& présentée sur un graphique de
+corrélation. Si certaines variables se montrent anormalement corrélées
+elles devront être exclues de l'étude après accord du promoteur.
+
+Les variables monotones (toutes les valeurs identiques) ne seront pas
+analysées mais seront signalées.
+
+Les variables en texte libre ne seront pas analysées.
+
+\chapter{Description de la
+population}\label{description-de-la-population}
+
+\section{Analyse simple}\label{analyse-simple}
+
+Un tableau présentera les données démographiques des patients
+(âge,sexe\dots) \& les circonstances du traumatisme.
+
+\section{Analyse factorielle}\label{analyse-factorielle}
+
+Si le nombre de cas recueillis le permet une analyse factorielle en MCA
+(Analyse de correspondances multiples -- package \texttt{FactoMineR}
+\autocite{facto}) sera réalisée.
+
+Cette analyse ne pourra être réalisée qu'après transformation des
+variables numériques en catégories \& imputation des données manquantes
+ce qui n'est possible que si ces dernières ne sont pas trop nombreuses.
+
+\chapter{Objectif principal}\label{objectif-principal}
+
+\begin{tcolorbox}
+Présence, lors de la prise en charge pré-hospitalière d’un critère de transfusion sanguine massive et immédiate mesurée par le score ABC entre l’arrivée du \gls{smur} et \qty{10}{\min} avant l’arrivée à l’hôpital.
+\end{tcolorbox}
+
+Le score ABC sera calculé pour tous les patients. Un premier tableau
+présentera la répartition des scores ABC.
+
+Le nombre avec le pourcentage (et son intervalle de confiance à 95 \%)
+de patients ayant un score ABC \(\geq\) 2 sera présenté pour tous les
+stades (temps) de la prise en charge.
+
+\chapter{Objectifs secondaires}\label{objectifs-secondaires}
+
+\section{Objectif secondaire 1}\label{objectif-secondaire-1}
+
+\begin{tcolorbox}
+La présence d’au moins une transfusion, quel que soit le volume entre le bilan et l’arrivée à l’hôpital.
+\end{tcolorbox}
+
+Le nombre avec le pourcentage (avec son intervalle de confiance à
+\qty{95}{\percent}) de patients ayant reçu une transfusion sera
+présenté, croisé avec le stade de la prise en charge (temps) \& le score
+ABC.
+
+\section{Objectif secondaire 2}\label{objectif-secondaire-2}
+
+\begin{tcolorbox}
+La mortalité est définie par les patients vivant à l’arrivée du \gls{smur} et décédés à l’arrivée à l’hôpital.
+\end{tcolorbox}
+
+Le nombre avec le pourcentage (avec son intervalle de confiance à
+\qty{95}{\percent}) de patients décédés sera présenté, croisé avec le
+score ABC.
+
+\section{Objectif secondaire 3}\label{objectif-secondaire-3}
+
+\begin{tcolorbox}
+Le temps de prise en charge est déterminé par le délai entre l’arrivée de l’équipe médicale et l’arrivée à l’hôpital.
+\end{tcolorbox}
+
+La durée de la prise en charge sera présentée en minutes (moyenne,
+écart-types, extrêmes).
+
+\section{Objectif secondaire 4}\label{objectif-secondaire-4}
+
+\begin{tcolorbox}
+Nombre de patients potentiellement éligibles à la pose d’un \gls{reboa} au regard de la présence de saignement abdominal ou pelvien à l’échographie, d’une \gls{pas} > \qty{90}{\mmHg} malgré \qty{3}{\mg\per\hour} de \gls{nad}, l’absence de trauma thoracique ou des \gls{tsa}.
+\end{tcolorbox}
+
+Le nombre avec le pourcentage (avec son intervalle de confiance à
+\qty{95}{\percent}) de patients éligibles à la pose d'un \gls{reboa}
+sera présenté.
+
+\chapter{Technique}\label{technique}
+
+L'analyse statistique sera réalisée avec le logiciel
+\textbf{R}\autocite{rstat} \& divers packages. Outre ceux cités dans le
+texte ou utilisera en particulier \texttt{tidyverse} \autocite{tidy} \&
+\texttt{baseph} \autocite{baseph}.
+
+Un dépôt GitHub sera utilisé qui ne comprendra que le code \& non les
+données ou résultats. Au besoin un faux tableau de données sera présenté
+pour permettre des tests.
+
+\url{https://github.com/philippemichel/TRAP}
+
+\printglossary[ title={Abréviations \& Acronymes}, toctitle={Abréviations \& Acronymes}]
+
+\printglossary[type = stat, title={Glossaire statistique}, toctitle={Glossaire statistique}]
+
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+
+\printbibliography
+
+
+\end{document}

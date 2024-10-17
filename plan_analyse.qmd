@@ -15,11 +15,20 @@ library("tidyverse")
 
 Le \gls{alpha} retenu sera de \num{0.05} & la \gls{puissance} de \num{0.8}.
 
-Vu le faible nombre de cas on ne fera pas d'hypothèse de normalité. Les variables numériques seront présentées par leur médiane avec les quartiles & comparées grâce au test non paramétrique de Wilcoxon. Les variables discrètes seront présentés en nombre avec le pourcentage. L'intervalle de confiance (à 95 %) sera calculé par \gls{bootstrap} (package `boot` [@boot]). Le test du $\chi^2$ de Spearman sera utilisé sous réserve d'effectifs suffisants, à défaut le test exact de Fischer. Des graphiques seront réalisés pour les résultats importants (package `ggplot2` [@ggplot]).
+Les variables numériques seront présentées par leur moyenne avec l'écart-type & comparées grâce au test de Student. Les variables discrètes seront présentés en nombre avec le pourcentage. L'intervalle de confiance (à \qty{95}{\percent}) sera calculé par \gls{bootstrap} (package `boot` [@boot]). Le test du $\chi^2$ de Spearman sera utilisé sous réserve d'effectifs suffisants, à défaut le test exact de Fischer. Des graphiques seront réalisés pour les résultats importants (package `ggplot2` [@ggplot]).
+
 
 ## Taille de l'échantillon
 
-Il s'agit d'une étude observationnelle simple pour lesquelles il est difficile de préciser un nombre de cas nécessaires en l'absence de test statistique. Néanmoins on peut estimer à environ cent cas le strict minimum nécessaire pour avoir un échantillon utilisable s'il n'y a pas trop de données manquantes. 
+```{r}
+#| label: taille
+
+nn <- nb.obs.ph(0.5, 0.1)
+nn <- (floor(nn/10)+1)*11
+```
+
+
+Il s'agit d'une étude observationnelle simple pour lesquelles il est difficile de préciser un nombre de cas nécessaires en l'absence de test statistique. Néanmoins on peut estimer à au moins `r nn` cas le strict minimum nécessaire pour avoir un échantillon utilisable s'il n'y a pas trop de données manquantes (\gls{alpha} \num{0.05}, marge d'erreur admissible \qty{10}{\percent}).
 
 ## Données manquantes
 
@@ -39,7 +48,7 @@ Les variables en texte libre ne seront pas analysées.
 
 ## Analyse simple
 
-Un tableau présentera les données démographiques des patients (âge,sexe, type d'accident\dots). 
+Un tableau présentera les données démographiques des patients (âge,sexe\dots) & les circonstances du traumatisme. 
 
 
 ## Analyse factorielle
@@ -49,28 +58,46 @@ Si le nombre de cas recueillis le permet une analyse factorielle en MCA (Analyse
 Cette analyse ne pourra être réalisée qu'après transformation des variables numériques en catégories & imputation des données manquantes ce qui n'est possible que si ces dernières ne sont pas trop nombreuses.
 
 # Objectif principal
-*Présence, lors de la prise en charge pré-hospitalière d’un critère de transfusion sanguine massive et immédiate mesurée par le score ABC entre l’arrivée du \gls{smur} et \qty{10}{\min} avant l’arrivée à l’hôpital.*
 
+\begin{tcolorbox}
+Présence, lors de la prise en charge pré-hospitalière d’un critère de transfusion sanguine massive et immédiate mesurée par le score ABC entre l’arrivée du \gls{smur} et \qty{10}{\min} avant l’arrivée à l’hôpital.
+\end{tcolorbox}
 
-Le score ABC sera calculé pour tous les patients. Le nombre avec le pourcentage (avec son intervalle de confiance à 95 %) de patients ayant un score ABC $\geq$ 2 sera présenté pour tous les stades (temps) de la prise en charge.
+Le score ABC sera calculé pour tous les patients. Un premier tableau présentera la répartition des scores ABC.
+
+Le nombre avec le pourcentage (et son intervalle de confiance à 95 %) de patients ayant un score ABC $\geq$ 2 sera présenté pour tous les stades (temps) de la prise en charge.
+
 
 # Objectifs secondaires
 
-## Objectif 1
-*La présence d’au moins une transfusion, quel que soit le volume entre le bilan et l’arrivée à l’hôpital*
+## Objectif secondaire 1
+\begin{tcolorbox}
+La présence d’au moins une transfusion, quel que soit le volume entre le bilan et l’arrivée à l’hôpital.
+\end{tcolorbox}
 
-Le nombre avec le pourcentage (avec son intervalle de confiance à 95 %) de patients ayant reçu une transfusion sera présenté, croisé avec le stade de la prise en charge (temps) & le score ABC.
+Le nombre avec le pourcentage (avec son intervalle de confiance à \qty{95}{\percent}) de patients ayant reçu une transfusion sera présenté, croisé avec le stade de la prise en charge (temps) & le score ABC.
 
-## Objectif 2
-*La mortalité est définie par les patients vivant à l’arrivée du \gls{smur} et décédés à l’arrivée à l’hôpital.*
+## Objectif secondaire 2
+\begin{tcolorbox}
+La mortalité est définie par les patients vivant à l’arrivée du \gls{smur} et décédés à l’arrivée à l’hôpital.
+\end{tcolorbox}
+
+Le nombre avec le pourcentage (avec son intervalle de confiance à \qty{95}{\percent}) de patients décédés sera présenté, croisé avec le score ABC.
 
 
+## Objectif secondaire 3
+\begin{tcolorbox}
+Le temps de prise en charge est déterminé par le délai entre l’arrivée de l’équipe médicale et l’arrivée à l’hôpital.
+\end{tcolorbox}
 
-## Objectif 3
-*Le temps de prise en charge est déterminé par le délai entre l’arrivée de l’équipe médicale et l’arrivée à l’hôpital.*
+La durée de la prise en charge sera présentée en minutes (moyenne, écart-types, extrêmes).
 
-## Objectif 4
-*Nombre de patients potentiellement éligibles à la pose d’un \gls{reboa}  au regard de la présence de saignement abdominal ou pelvien à l’échographie, d’une \gls{pas} > \qty{90}{\mmhg} malgré \qty{3}{\mg\per\hour} de \gls{nad}, l’absence de trauma thoracique ou des \gls{tsa}*
+## Objectif secondaire 4
+\begin{tcolorbox}
+Nombre de patients potentiellement éligibles à la pose d’un \gls{reboa} au regard de la présence de saignement abdominal ou pelvien à l’échographie, d’une \gls{pas} > \qty{90}{\mmHg} malgré \qty{3}{\mg\per\hour} de \gls{nad}, l’absence de trauma thoracique ou des \gls{tsa}.
+\end{tcolorbox}
+
+Le nombre avec le pourcentage (avec son intervalle de confiance à \qty{95}{\percent}) de patients éligibles à la pose d'un \gls{reboa} sera présenté.
 
 
 # Technique {.appendix}
